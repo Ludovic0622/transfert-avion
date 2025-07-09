@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Transfert - AVION TRANS AFRICA</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .reseau-logo {
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    select option {
+      padding-left: 28px;
+    }
+    .required {
+      color: red;
+      font-weight: bold;
+    }
+    .note-ludovic {
+      background-color: #fff9c4;
+      border: 1px solid #fbc02d;
+      padding: 10px;
+      margin: 20px 0;
+      color: #333;
+      font-size: 0.95em;
+    }
+    .error-message {
+      color: red;
+      font-size: 0.9em;
+      margin-top: 5px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="image/ludo.png" alt="Logo Avion" class="nav-logo">
+      <span class="nav-brand">AVION TRANS AFRICA</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="transfert.html">Reçu de Transfert</a></li>
+      <li><a href="contact.html">Service Client</a></li>
+      <li><a href="apropos.html">À propos</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <h1>Formulaire de Transfert</h1>
+    <div class="avion-arc"><span class="plane">✈️</span></div>
+    <p>Remplissez ce formulaire pour envoyer de l’argent rapidement</p>
+  </header>
+
+  <section class="formulaire">
+    <div class="note-ludovic">
+      ✅ Merci de <strong>vérifier que le nom affiché lors du transfert est bien <u>ATTYPO LUDOVIC</u></strong>  
+      pour éviter toute erreur ou tentative de fraude.
+    </div>
+
+    <form onsubmit="return validerFormulaire()" action="https://formspree.io/f/ton-email-id" method="POST" enctype="multipart/form-data">
+      <label for="nom">Nom <span class="required">*</span></label>
+      <input type="text" id="nom" name="nom" required />
+
+      <label for="prenom">Prénom <span class="required">*</span></label>
+      <input type="text" id="prenom" name="prenom" required />
+
+      <label for="pays">Pays d’origine <span class="required">*</span></label>
+      <select id="pays" name="pays" required>
+        <option value="">-- Sélectionner --</option>
+        <option value="Sénégal">Sénégal</option>
+        <option value="Congo">Congo</option>
+      </select>
+
+      <label for="reseau">Réseau utilisé <span class="required">*</span></label>
+      <select id="reseau" name="reseau" required>
+        <option value="">-- Choisir un réseau --</option>
+      </select>
+
+      <label for="paysCible">Transférer vers <span class="required">*</span></label>
+      <select id="paysCible" name="paysCible" required>
+        <option value="">-- Sélectionner --</option>
+        <option value="Sénégal">Sénégal</option>
+        <option value="Congo">Congo</option>
+      </select>
+
+      <label for="reseauCible">Réseau destinataire <span class="required">*</span></label>
+      <select id="reseauCible" name="reseauCible" required>
+        <option value="">-- Choisir un réseau --</option>
+      </select>
+
+      <label for="montant">Montant à recevoir (min. 1 000 FCFA) <span class="required">*</span></label>
+      <input type="number" id="montant" name="montant" required />
+      <div id="erreurMontant" class="error-message">💡 Montant minimum recommandé : 1 000 FCFA</div>
+
+      <label for="total">💰 Total à envoyer (frais inclus)</label>
+      <input type="text" id="total" readonly style="background-color: #eee; font-weight: bold;" />
+
+      <label for="screenshot">📎 Capture du transfert <span class="required">*</span></label>
+      <input type="file" id="screenshot" name="screenshot" accept="image/*" required />
+
+      <label for="email">Adresse Email <span class="required">*</span></label>
+      <input type="email" id="email" name="email" required />
+
+      <button type="submit" class="btn">Envoyer</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>⏱️ Transfert en 5 à 8 minutes | © Avion Trans Africa</p>
+  </footer>
+
+  <script>
+    const reseaux = {
+      "Sénégal": [
+        { nom: "Orange Money", tel: "+221 750 15 33 50", logo: "orange-logo-png_seeklogo-168289.png" },
+        { nom: "Wave", tel: "+221 76 788 29 63", logo: "wave.png" }
+      ],
+      "Congo": [
+        { nom: "MTN Money", tel: "+242 06 465 13 47", logo: "Mtn-logo-svg.svg.png" },
+        { nom: "Airtel Money (indisponible)", tel: "Indisponible", logo: "Airtel_logo-01.png" }
+      ]
+    };
+
+    function updateRéseaux(selectId, paysId) {
+      const pays = document.getElementById(paysId).value;
+      const select = document.getElementById(selectId);
+      select.innerHTML = "";
+
+      const placeholder = document.createElement("option");
+      placeholder.value = "";
+      placeholder.textContent = "-- Choisir un réseau --";
+      select.appendChild(placeholder);
+
+      if (reseaux[pays]) {
+        reseaux[pays].forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item.nom;
+          opt.textContent = `${item.nom} — ${item.tel}`;
+          opt.style.backgroundImage = `url(${item.logo})`;
+          opt.style.backgroundRepeat = "no-repeat";
+          opt.style.backgroundPosition = "5px center";
+          opt.style.backgroundSize = "18px 18px";
+          opt.style.paddingLeft = "30px";
+          select.appendChild(opt);
+        });
+      }
+    }
+
+    function calculerTotal() {
+      const montant = parseFloat(document.getElementById("montant").value);
+      const pays = document.getElementById("pays").value;
+      const totalField = document.getElementById("total");
+      const erreur = document.getElementById("erreurMontant");
+
+      if (!pays || isNaN(montant)) {
+        totalField.value = "";
+        erreur.style.display = "none";
+        return;
+      }
+
+      if (montant < 1000) {
+        erreur.style.display = "block";
+        totalField.value = "";
+        return;
+      } else {
+        erreur.style.display = "none";
+      }
+
+      const taux = pays === "Sénégal" ? 0.14 : 0.12;
+      const total = Math.round(montant * (1 + taux));
+      totalField.value = total + " FCFA";
+    }
+
+    function validerFormulaire() {
+      const montant = parseFloat(document.getElementById("montant").value);
+      if (isNaN(montant) || montant < 1000) {
+        document.getElementById("erreurMontant").style.display = "block";
+        return false;
+      }
+      return true;
+    }
+
+    document.getElementById("pays").addEventListener("change", () => {
+      updateRéseaux("reseau", "pays");
+      calculerTotal();
+    });
+
+    document.getElementById("paysCible").addEventListener("change", () => {
+      updateRéseaux("reseauCible", "paysCible");
+    });
+
+    document.getElementById("montant").addEventListener("input", calculerTotal);
+  </script>
+  <script>
+  function afficherMessageDeRemerciement() {
+    alert("✅ Merci pour votre envoi !\n\n⏱️ Le transfert sera effectué dans un délai de 5 à 8 minutes. \n\n📩 Si vous ne recevez pas de confirmation passé ce délai, veuillez contacter le service client par email à attypoludovic@gmail.com.\n\n🚨 Pour les cas urgents, écrivez directement sur WhatsApp :\n🇸🇳 Sénégal → +221 76 788 29 63\n🇨🇬 Congo Brazzaville → +242 06 465 13 47");
+  }
+
+  function validerFormulaire() {
+    const montant = parseFloat(document.getElementById("montant").value);
+    const erreur = document.getElementById("erreurMontant");
+    const ok = !isNaN(montant) && montant >= 1000;
+    erreur.style.display = ok ? "none" : "block";
+
+    if (ok) {
+      afficherMessageDeRemerciement();
+      return true;
+    }
+    return false;
+  }
+</script>
+</body>
+</html>
