@@ -1,45 +1,129 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Accueil - AVION TRANS AFRICA</title>   
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DirectPay - Transfert d'Argent Simple</title>
+    <style>
+        /* CSS de base pour que ça soit lisible */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #007bff; /* Couleur DirectPay */
+            text-align: center;
+        }
+        h2 {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        input[type="text"], 
+        input[type="email"], 
+        input[type="number"], 
+        select, 
+        textarea {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-left">
-      <img src="image/ludo.png" alt="Logo Avion" class="nav-logo">
-      <span class="nav-brand">AVION TRANS AFRICA</span>
+
+    <div class="container">
+        <h1>✨ DirectPay - Demande de Transfert</h1>
+        
+        <form id="transferForm">
+            
+            <h2>1. Détails du Transfert</h2>
+
+            <label for="montant">Montant à envoyer (XOF) :</label>
+            <input type="number" id="montant" name="montant" required min="1000" placeholder="Minimum 1000 XOF">
+
+            <label for="paysExpediteur">Pays de l'Expéditeur :</label>
+            <select id="paysExpediteur" name="paysExpediteur" required>
+                <option value="">-- Choisir le pays --</option>
+                <option value="SN">🇸🇳 Sénégal</option>
+                <option value="CI">🇨🇮 Côte d’Ivoire</option>
+                <option value="CM">🇨🇲 Cameroun</option>
+                <option value="TG">🇹🇬 Togo</option>
+                <option value="BF">🇧🇫 Burkina Faso</option>
+                <option value="BJ">🇧🇯 Bénin</option>
+                <option value="NE">🇳🇪 Niger</option>
+                <option value="ML">🇲🇱 Mali</option>
+                <option value="GA">🇬🇦 Gabon</option>
+                <option value="CG">🇨🇬 Congo</option>
+            </select>
+
+            <label for="paysBeneficiaire">Pays du Bénéficiaire :</label>
+            <select id="paysBeneficiaire" name="paysBeneficiaire" required>
+                <option value="">-- Choisir le pays --</option>
+                <option value="SN">🇸🇳 Sénégal</option>
+                <option value="CI">🇨🇮 Côte d’Ivoire</option>
+                <option value="CM">🇨🇲 Cameroun</option>
+                <option value="TG">🇹🇬 Togo</option>
+                <option value="BF">🇧🇫 Burkina Faso</option>
+                <option value="BJ">🇧🇯 Bénin</option>
+                <option value="NE">🇳🇪 Niger</option>
+                <option value="ML">🇲🇱 Mali</option>
+                <option value="GA">🇬🇦 Gabon</option>
+                <option value="CG">🇨🇬 Congo</option>
+            </select>
+            
+            <h2>2. Vos Coordonnées (Expéditeur)</h2>
+
+            <label for="nomExpediteur">Nom et Prénom :</label>
+            <input type="text" id="nomExpediteur" name="nomExpediteur" required>
+
+            <label for="emailExpediteur">Votre Email (pour le suivi) :</label>
+            <input type="email" id="emailExpediteur" name="emailExpediteur" required>
+            
+            <h2>3. Coordonnées du Bénéficiaire</h2>
+            
+            <label for="nomBeneficiaire">Nom et Prénom du Bénéficiaire :</label>
+            <input type="text" id="nomBeneficiaire" name="nomBeneficiaire" required>
+
+            <label for="moyenPaiement">Détails de réception (Mobile Money / Compte Bancaire / etc.) :</label>
+            <textarea id="moyenPaiement" name="moyenPaiement" rows="4" placeholder="Ex: Numéro Mobile Money Orange : 77 XXXXX XX, ou RIB/IBAN..."></textarea>
+
+            <button type="submit">Soumettre la Demande de Transfert</button>
+            
+        </form>
     </div>
-    <ul class="nav-links">
-      <li><a href="index.html">Accueil</a></li>
-      <li><a href="transfert.html">Reçu de Transfert</a></li>
-      <li><a href="contact.html">Service Client</a></li>
-      <li><a href="apropos.html">À propos</a></li>
-    </ul>
-  </nav>
 
-  <header>
-    <h1>AVION TRANS AFRICA</h1>
-    <div class="avion-arc"><span class="plane">✈️</span></div>
-    <p>Transferts instantanés entre le Sénégal 🇸🇳 et le Congo 🇨🇬</p>
-  </header>
-
-  <section class="tarifs">
-    <h2>Tarifs de transfert</h2>
-    <table>
-      <tr><th>Origine</th><th>Destination</th><th>Frais</th></tr>
-      <tr><td>Congo</td><td>Sénégal</td><td>12%</td></tr>
-      <tr><td>Sénégal</td><td>Congo</td><td>14%</td></tr>
-    </table>
-  </section>
-
-  <section class="btn-transfert">
-    <a href="transfert.html" class="btn">Commencer le transfert</a>
-  </section>
-
-  <footer>
-    <p>⏱️ Délai moyen : 5 à 8 minutes | © Avion Trans Africa</p>
-  </footer>
 </body>
 </html>
